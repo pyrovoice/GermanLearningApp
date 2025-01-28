@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.example.germanapp.App;
 import com.example.germanapp.model.UserData;
-import com.example.germanapp.model.WordPairTracking;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,14 +12,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.Optional;
 
 public class DataSaverService {
     private static DataSaverService instance = null;
     final String USER_FILE_NAME = "user_file.txt";
-
-
 
     public UserData userData = null;
     private DataSaverService() {
@@ -130,6 +126,19 @@ public class DataSaverService {
             Log.println(Log.DEBUG, null, "Save file Creation: " + fileCreation);
         } catch (IOException e) {
             throw new IOException();
+        }
+    }
+
+    public void eraseUserData(){
+        File file = null;
+        try {
+            file = getSaveFilePath();
+            if (file.exists()) {
+                file.delete();
+            }
+            userData = new UserData();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
