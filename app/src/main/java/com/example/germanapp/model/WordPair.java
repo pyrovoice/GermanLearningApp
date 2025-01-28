@@ -2,7 +2,7 @@ package com.example.germanapp.model;
 
 import java.io.Serializable;
 
-public class  WordPair implements Serializable {
+public class WordPair implements Serializable {
     private final String germanWord;
     private final String englishWord;
     private final PriorityLevel priorityLevel;

@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.example.germanapp.App;
 import com.example.germanapp.model.PriorityLevel;
+import com.example.germanapp.model.UserData;
 import com.example.germanapp.model.WordPair;
 import com.example.germanapp.model.WordPairTracking;
 
@@ -25,32 +26,35 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class WordPairTrackingService {
-    final String USER_FILE_NAME = "user_file.txt";
-    ArrayList<WordPairTracking> currentWordPool = null;
+    ArrayList<WordPairTracking> currentWordPool = new ArrayList<>();
     private int wordPoolTracker = 0;
+    //TODO: Move those to configuration
+    private final int WORDPAIR_SUCCESS_CUTOFF = 3;
+    private final int CURRENT_WORDPAIR_POOL_SIZE = 10;
+    private final int CURRENT_WORDPAIR_POOL_SIZE_REPOPULATE = 4;
     private static WordPairTrackingService instance = null;
+    ArrayList<WordPairTracking> userDataWordPool = null;
+    List<WordPair> systemWordPool = null;
     private WordPairTrackingService(){
-        try {
-            currentWordPool = loadUserData();
-        } catch (Exception e) {
-            Log.println(Log.ERROR, null, e.getMessage());
-        }
-        if(currentWordPool == null){
-            List<WordPair> words = Arrays.asList(
-                    new WordPair("machen", "to do", PriorityLevel.HIGHEST),
-                    new WordPair("anbieten", "to offer", PriorityLevel.MEDIUM),
-                    new WordPair("sein", "to be", PriorityLevel.HIGHEST),
-                    new WordPair("führen", "to lead", PriorityLevel.HIGH),
-                    new WordPair("Detektiv", "detective", PriorityLevel.LOWEST),
-                    new WordPair("Stein", "a rock", PriorityLevel.HIGHEST)
-            );
-            currentWordPool =  words.stream()
-                    .sorted(Comparator.comparing(w -> w.getPriorityLevel().value))
-                    .map(WordPairTracking::new).collect(Collectors.toCollection(ArrayList::new));
-        }
+        Optional<UserData> userDataOpt = DataSaverService.getInstance().getUserData();
+        userDataOpt.ifPresent(userData -> userDataWordPool = userData.getUserwordPool());
+        systemWordPool = getSystemWordPool();
     }
+
+    private List<WordPair> getSystemWordPool() {
+        return Arrays.asList(
+                new WordPair("machen", "to do", PriorityLevel.HIGHEST),
+                new WordPair("anbieten", "to offer", PriorityLevel.MEDIUM),
+                new WordPair("sein", "to be", PriorityLevel.HIGHEST),
+                new WordPair("führen", "to lead", PriorityLevel.HIGH),
+                new WordPair("Detektiv", "detective", PriorityLevel.LOWEST),
+                new WordPair("Stein", "a rock", PriorityLevel.HIGHEST)
+        );
+    }
+
     public static WordPairTrackingService getInstance(){
         if (instance == null){
             instance = new WordPairTrackingService();
@@ -59,7 +63,7 @@ public class WordPairTrackingService {
     }
 
     public Optional<WordPairTracking> getNextWord(){
-        if(wordPoolTracker >= currentWordPool.size()){
+        if(currentWordPool.isEmpty() || wordPoolTracker >= currentWordPool.size()){
             updatePool();
             wordPoolTracker = 0;
         }
@@ -70,106 +74,44 @@ public class WordPairTrackingService {
     }
 
     private void updatePool(){
-        currentWordPool = currentWordPool.stream().filter(wordPairTracking -> wordPairTracking.getSuccesses() < 2)
-                .collect(Collectors.toCollection(ArrayList::new));
+        removeFromCurrentPoolLearnedWords();
+        if(currentWordPool.size() <= CURRENT_WORDPAIR_POOL_SIZE_REPOPULATE){
+            populatePoolFromUserPool();
+            populatePoolFromSystemPool();
+        }
+        currentWordPool.forEach(WordPairTracking::toggleLanguage);
         Collections.shuffle(currentWordPool);
     }
-    private ArrayList<WordPairTracking> loadUserData() {
-        FileInputStream fis = null;
-        ObjectInputStream ois = null;
-        try {
-            File file = getSaveFilePath();
-            if (!file.exists()){
-                createSaveFile(file);
-                return null;
-            }
-            fis = new FileInputStream(file);
-            ois = new ObjectInputStream(fis);
-            Object loadedObject = ois.readObject();
-            if(loadedObject instanceof ArrayList && !((ArrayList<?>) loadedObject).isEmpty() && ((ArrayList<?>) loadedObject).get(0) instanceof WordPairTracking){
-                Log.println(Log.DEBUG, null, "List loaded");
-                return (ArrayList<WordPairTracking>) loadedObject;
-            }
-        } catch (FileNotFoundException e) {
-            Log.println(Log.ERROR, null, "Error loading data (FNF): "+e.getMessage());
-        } catch (ClassNotFoundException e) {
-            Log.println(Log.ERROR, null, "Error loading data (CNF): "+e.getMessage());
-        } catch (IOException e) {
-            Log.println(Log.ERROR, null, "Error loading data (IO): "+e.getMessage());
-        }finally {
-            try {
-                if(fis != null){
-                    fis.close();
-                }
 
-                if(ois != null){
-                    ois.close();
-                }
-            } catch (IOException e) {
-                Log.println(Log.ERROR, null, "Error closing streams: "+e.getMessage());
-            }
-        }
-        return null;
+    private void removeFromCurrentPoolLearnedWords() {
+        currentWordPool = currentWordPool.stream().filter(wordPairTracking -> !isWordLearned(wordPairTracking))
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+    private void populatePoolFromUserPool() {
+        currentWordPool.addAll(userDataWordPool.stream()
+                .filter(wordPairTracking -> !isWordLearned(wordPairTracking))
+                .limit(CURRENT_WORDPAIR_POOL_SIZE - currentWordPool.size())
+                .collect(Collectors.toList()));
     }
 
-    private void saveUserData() {
-        FileOutputStream outputStream = null;
-        ObjectOutputStream oos = null;
-        try {
-            File file = getSaveFilePath();
-            if(!file.exists()){
-                createSaveFile(file);
-                if(!file.exists()){
-                    Log.println(Log.ERROR, null, "Cannot save: No file");
-                    return;
-                }
-            }
-            outputStream = new FileOutputStream(file);
-            oos = new ObjectOutputStream(outputStream);
-            oos.writeObject(currentWordPool);
-
-        } catch (FileNotFoundException e) {
-            Log.println(Log.ERROR, null, "File read issue: " + e.getMessage());
-        } catch (IOException e) {
-            Log.println(Log.ERROR, null, "File create issue: " + e.getMessage());
-        } finally{
-            if(outputStream != null){
-                try {
-                    outputStream.close();
-                } catch (IOException e) {
-                    Log.println(Log.ERROR, null, "Error closing stream output");
-                }
-            }
-            if(oos != null){
-                try {
-                    oos.close();
-                } catch (IOException e) {
-                    Log.println(Log.ERROR, null, "Error closing stream oos");
-                }
-            }
-        }
+    private void populatePoolFromSystemPool(){
+        List<WordPairTracking> addedWords = systemWordPool.stream()
+                .sorted(Comparator.comparing(WordPair::getPriorityLevel))
+                .limit(CURRENT_WORDPAIR_POOL_SIZE - currentWordPool.size())
+                .map(WordPairTracking::new)
+                .collect(Collectors.toList());
+        userDataWordPool.addAll(addedWords);
+        currentWordPool.addAll(addedWords);
     }
+
+    private boolean isWordLearned(WordPairTracking wordPairTracking) {
+        return wordPairTracking.getSuccessTracker() > 0 && wordPairTracking.getNbrTries() <= 1 ||
+                wordPairTracking.getSuccessTracker() >= WORDPAIR_SUCCESS_CUTOFF;
+    }
+
 
     public void updateWordPairIncrement(WordPairTracking wordPair, boolean isSuccess){
-        if(isSuccess){
-            wordPair.incrementSuccesses();
-        }else{
-            wordPair.incrementMistakes();
-        }
-        saveUserData();
-    }
-
-    private File getSaveFilePath() throws IOException {
-        File dirPath = App.getContext().getExternalFilesDir(null);
-        return new File(dirPath+"/"+USER_FILE_NAME);
-    }
-
-    private void createSaveFile(File file) throws IOException {
-        try {
-            boolean fileCreation = file.createNewFile();
-            Log.println(Log.DEBUG, null, "Save file Creation: " + fileCreation);
-        } catch (IOException e) {
-            throw new IOException();
-        }
+        wordPair.updateTracking(isSuccess);
+        DataSaverService.getInstance().saveUserData();
     }
 }

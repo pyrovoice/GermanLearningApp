@@ -12,7 +12,7 @@ class MainActivity2 : FragmentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play)
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
+            supportFragmentManager.beginTransaction()
                 .replace(R.id.main_browse_fragment, MainFragment())
                 .commitNow()
         }
