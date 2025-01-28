@@ -80,15 +80,31 @@ public class PlayActivity extends Activity {
             return;
         }
         currentWordPair = nextWordOpt.get();
-        wordShown.setText(currentWordPair.getWordPair().getEnglishWord());
-        ConvertTextToSpeech(currentWordPair.getWordPair().getEnglishWord(), engLocal);
+        wordShown.setText(currentWordPair.getShownWord());
+        ConvertTextToSpeech(currentWordPair.getShownWord(), getLocaleShownWord(currentWordPair));
         showRevealButton();
     }
 
     private void revealWord(){
-        wordHidden.setText(currentWordPair.getWordPair().getGermanWord());
-        ConvertTextToSpeech(currentWordPair.getWordPair().getGermanWord(), gerLocal);
+        wordHidden.setText(currentWordPair.getHiddenWord());
+        ConvertTextToSpeech(currentWordPair.getHiddenWord(), getLocaleHiddenWord(currentWordPair));
         showAnswerButtons();
+    }
+
+    private Locale getLocaleShownWord(WordPairTracking currentWordPair) {
+        if(currentWordPair.isEnglishShown()){
+            return engLocal;
+        }else{
+            return gerLocal;
+        }
+    }
+
+    private Locale getLocaleHiddenWord(WordPairTracking currentWordPair) {
+        if(currentWordPair.isEnglishShown()){
+            return gerLocal;
+        }else{
+            return engLocal;
+        }
     }
 
     private void isSuccess(boolean isSuccess){

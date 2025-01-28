@@ -10,7 +10,6 @@ public class WordPairTracking implements Serializable {
 
     public WordPairTracking(WordPair wordPair) {
         this.wordPair = wordPair;
-
     }
 
     public void toggleLanguage() {
@@ -36,5 +35,21 @@ public class WordPairTracking implements Serializable {
     public void updateTracking(boolean isSuccess) {
         this.nbrTries++;
         this.successTracker += isSuccess ? 1 : -1;
+    }
+
+    public String getShownWord() {
+        if (isEnglishShown){
+            return wordPair.getEnglishWord();
+        }else{
+            return wordPair.getGermanWord();
+        }
+    }
+
+    public String getHiddenWord() {
+        if (isEnglishShown){
+            return wordPair.getGermanWord();
+        }else{
+            return wordPair.getEnglishWord();
+        }
     }
 }
