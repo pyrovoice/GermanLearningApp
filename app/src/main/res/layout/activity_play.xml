@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_browse_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity2"
+    tools:ignore="MergeRootFrame">
+
+    <TextView
+        android:id="@+id/wordShown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="101dp"
+        android:layout_marginEnd="0dp"
+        android:editable="false"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Loading"
+        android:textAlignment="center"
+        android:textSize="28sp" />
+
+    <TextView
+        android:id="@+id/wordHidden"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="387dp"
+        android:editable="false"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Laden"
+        android:textAlignment="center"
+        android:textSize="28sp" />
+
+    <Button
+        android:id="@+id/revealButton"
+        android:layout_width="110dp"
+        android:layout_height="75dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="149dp"
+        android:layout_marginEnd="152dp"
+        android:layout_marginBottom="78dp"
+        android:text="Reveal"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/wrongAnswerButton"
+        android:layout_width="120dp"
+        android:layout_height="115dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="256dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="#FF0000"
+        android:text="Mistake"
+        android:textSize="20sp"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/goodAnswerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="113dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="249dp"
+        android:layout_marginEnd="39dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="#4CAF50"
+        android:text="Success"
+        android:textSize="20sp"
+        android:visibility="invisible" />
+</RelativeLayout>
