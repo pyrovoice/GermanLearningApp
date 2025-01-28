@@ -34,7 +34,11 @@ public class WordPairTracking implements Serializable {
 
     public void updateTracking(boolean isSuccess) {
         this.nbrTries++;
-        this.successTracker += isSuccess ? 1 : -1;
+        if(isSuccess && successTracker < 2){
+            successTracker++;
+        }else if (!isSuccess && successTracker > -1){
+            successTracker--;
+        }
     }
 
     public String getShownWord() {

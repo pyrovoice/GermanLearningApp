@@ -76,6 +76,7 @@ public class PlayActivity extends Activity {
         wordHidden.setText("");
         Optional<WordPairTracking> nextWordOpt = wordPairTrackingService.getNextWord();
         if(nextWordOpt.isEmpty()){
+            Log.println(Log.DEBUG, null, "No more words to show");
             this.finishAffinity();
             return;
         }
