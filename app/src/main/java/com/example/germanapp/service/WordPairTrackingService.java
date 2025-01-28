@@ -90,6 +90,7 @@ public class WordPairTrackingService {
     private void populatePoolFromUserPool() {
         currentWordPool.addAll(userDataWordPool.stream()
                 .filter(wordPairTracking -> !isWordLearned(wordPairTracking))
+                .filter(wordPairTracking -> !currentWordPool.contains(wordPairTracking))
                 .limit(CURRENT_WORDPAIR_POOL_SIZE - currentWordPool.size())
                 .collect(Collectors.toList()));
     }
@@ -97,6 +98,7 @@ public class WordPairTrackingService {
     private void populatePoolFromSystemPool(){
         List<WordPairTracking> addedWords = systemWordPool.stream()
                 .sorted(Comparator.comparing(WordPair::getPriorityLevel))
+                .filter(wordPair -> currentWordPool.stream().anyMatch(c -> c.getWordPair() == wordPair))
                 .limit(CURRENT_WORDPAIR_POOL_SIZE - currentWordPool.size())
                 .map(WordPairTracking::new)
                 .collect(Collectors.toList());
