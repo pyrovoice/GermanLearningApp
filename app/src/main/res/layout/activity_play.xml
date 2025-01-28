@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_browse_fragment"
@@ -10,76 +10,75 @@
 
     <TextView
         android:id="@+id/wordShown"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
+        android:layout_width="410dp"
+        android:layout_height="52dp"
         android:layout_marginTop="101dp"
-        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="140dp"
         android:editable="false"
         android:ems="10"
         android:inputType="text"
         android:text="Loading"
         android:textAlignment="center"
-        android:textSize="28sp" />
+        android:textSize="28sp"
+        app:layout_constraintBottom_toTopOf="@+id/revealButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.003" />
 
     <TextView
         android:id="@+id/wordHidden"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="387dp"
+        android:layout_width="410dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="320dp"
         android:editable="false"
         android:ems="10"
         android:inputType="text"
         android:text="Laden"
         android:textAlignment="center"
-        android:textSize="28sp" />
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/revealButton"
-        android:layout_width="110dp"
-        android:layout_height="75dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="149dp"
-        android:layout_marginEnd="152dp"
-        android:layout_marginBottom="78dp"
+        android:layout_width="100dp"
+        android:layout_height="95dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
         android:text="Reveal"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/wrongAnswerButton"
-        android:layout_width="120dp"
-        android:layout_height="115dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="35dp"
-        android:layout_marginEnd="256dp"
+        android:layout_width="150dp"
+        android:layout_height="108dp"
+        android:layout_marginStart="16dp"
         android:layout_marginBottom="24dp"
         android:backgroundTint="#FF0000"
         android:text="Mistake"
         android:textSize="20sp"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/goodAnswerButton"
-        android:layout_width="wrap_content"
-        android:layout_height="113dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="249dp"
-        android:layout_marginEnd="39dp"
-        android:layout_marginBottom="30dp"
+        android:layout_width="158dp"
+        android:layout_height="106dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
         android:backgroundTint="#4CAF50"
         android:text="Success"
         android:textSize="20sp"
-        android:visibility="invisible" />
-</RelativeLayout>
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
