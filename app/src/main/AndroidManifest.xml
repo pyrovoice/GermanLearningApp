@@ -35,21 +35,12 @@
             android:icon="@drawable/app_icon_your_company"
             android:label="@string/title_activity_main2"
             android:logo="@drawable/app_icon_your_company"
-            android:screenOrientation="landscape">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".DetailsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".PlaybackActivity"
-            android:exported="false" />
-        <activity
-            android:name=".BrowseErrorActivity"
-            android:exported="false" />
         <activity
             android:name=".PlayActivity"
             android:exported="true"
