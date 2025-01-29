@@ -56,7 +56,7 @@ public class PlayActivity extends Activity {
                     showNextWord();
                 }
             } else
-                Log.e("error", "Initilization Failed!");
+                Log.e("error", "Initialization Failed!");
         });
     }
 
