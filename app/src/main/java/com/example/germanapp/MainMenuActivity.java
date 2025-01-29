@@ -5,8 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
-import com.example.germanapp.model.UserData;
-import com.example.germanapp.service.DataSaverService;
+import com.example.germanapp.service.UserDataService;
 
 public class MainMenuActivity extends Activity {
     @Override
@@ -24,6 +23,6 @@ public class MainMenuActivity extends Activity {
     }
 
     private void eraseData(){
-        DataSaverService.getInstance().eraseUserData();
+        UserDataService.getInstance().eraseUserData();
     }
 }

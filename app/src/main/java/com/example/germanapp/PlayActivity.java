@@ -17,7 +17,9 @@ import java.util.Optional;
 public class PlayActivity extends Activity {
     TextToSpeech tts;
     TextView wordShown;
+    TextView wordShownParticle;
     TextView wordHidden;
+    TextView wordHiddenParticle;
     WordPairTrackingService wordPairTrackingService;
     final Locale engLocal = Locale.US;
     final Locale gerLocal = Locale.GERMANY;
@@ -33,7 +35,9 @@ public class PlayActivity extends Activity {
         wordPairTrackingService = WordPairTrackingService.getInstance();
 
         wordShown = findViewById(R.id.wordShown);
+        wordShownParticle = findViewById(R.id.wordShownParticle);
         wordHidden = findViewById(R.id.wordHidden);
+        wordHiddenParticle = findViewById(R.id.wordHiddenParticle);
         revealButton = findViewById(R.id.revealButton);
         goodAnswerButton = findViewById(R.id.goodAnswerButton);
         wrongAnswerButton = findViewById(R.id.wrongAnswerButton);
@@ -74,6 +78,7 @@ public class PlayActivity extends Activity {
 
     private void showNextWord() {
         wordHidden.setText("");
+        wordHiddenParticle.setText("");
         Optional<WordPairTracking> nextWordOpt = wordPairTrackingService.getNextWord();
         if(nextWordOpt.isEmpty()){
             Log.println(Log.DEBUG, null, "No more words to show");
@@ -81,30 +86,44 @@ public class PlayActivity extends Activity {
             return;
         }
         currentWordPair = nextWordOpt.get();
-        wordShown.setText(currentWordPair.getShownWord());
-        ConvertTextToSpeech(currentWordPair.getShownWord(), getLocaleShownWord(currentWordPair));
+        String article = getArticle(currentWordPair, true);
+        wordShownParticle.setText(article);
+        String word = getWord(currentWordPair, true);
+        wordShown.setText(word);
+        ConvertTextToSpeech(article + " " + word, getLocale(currentWordPair, true));
         showRevealButton();
     }
 
     private void revealWord(){
-        wordHidden.setText(currentWordPair.getHiddenWord());
-        ConvertTextToSpeech(currentWordPair.getHiddenWord(), getLocaleHiddenWord(currentWordPair));
+        String article = getArticle(currentWordPair, false);
+        wordHiddenParticle.setText(article);
+        String word = getWord(currentWordPair, false);
+        wordHidden.setText(word);
+        ConvertTextToSpeech(article + " " + word, getLocale(currentWordPair, false));
         showAnswerButtons();
     }
 
-    private Locale getLocaleShownWord(WordPairTracking currentWordPair) {
-        if(currentWordPair.isEnglishShown()){
-            return engLocal;
+    private String getWord(WordPairTracking currentWordPair, boolean isShown){
+        if(currentWordPair.isEnglishShown() == isShown){
+            return currentWordPair.getWordPair().getEnglishWord();
         }else{
-            return gerLocal;
+            return currentWordPair.getWordPair().getGermanWord();
         }
     }
 
-    private Locale getLocaleHiddenWord(WordPairTracking currentWordPair) {
-        if(currentWordPair.isEnglishShown()){
-            return gerLocal;
+    private String getArticle(WordPairTracking currentWordPair, boolean isShown){
+        if(currentWordPair.isEnglishShown() == isShown){
+            return currentWordPair.getWordPair().getEnglishArticle();
         }else{
+            return currentWordPair.getWordPair().getGermanArticle();
+        }
+    }
+
+    private Locale getLocale(WordPairTracking currentWordPair, boolean isShown) {
+        if(currentWordPair.isEnglishShown() == isShown){
             return engLocal;
+        }else{
+            return gerLocal;
         }
     }
 

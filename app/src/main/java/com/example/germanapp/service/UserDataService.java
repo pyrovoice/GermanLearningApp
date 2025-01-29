@@ -14,12 +14,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Optional;
 
-public class DataSaverService {
-    private static DataSaverService instance = null;
+public class UserDataService {
+    private static UserDataService instance = null;
     final String USER_FILE_NAME = "user_file.txt";
-
     public UserData userData = null;
-    private DataSaverService() {
+    private UserDataService() {
         try {
             File file = getSaveFilePath();
             if (!file.exists()) {
@@ -34,9 +33,9 @@ public class DataSaverService {
         }
     }
 
-    public static DataSaverService getInstance() {
+    public static UserDataService getInstance() {
         if (instance == null) {
-            instance = new DataSaverService();
+            instance = new UserDataService();
         }
         return instance;
     }

@@ -1,32 +1,15 @@
 package com.example.germanapp.service;
 
-import static androidx.core.app.ActivityCompat.finishAffinity;
-
-import android.app.Application;
-import android.content.Context;
-import android.util.Log;
-
-import com.example.germanapp.App;
-import com.example.germanapp.model.PriorityLevel;
 import com.example.germanapp.model.UserData;
 import com.example.germanapp.model.WordPair;
 import com.example.germanapp.model.WordPairTracking;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class WordPairTrackingService {
     ArrayList<WordPairTracking> currentWordPool = new ArrayList<>();
@@ -37,22 +20,11 @@ public class WordPairTrackingService {
     private final int CURRENT_WORDPAIR_POOL_SIZE_REPOPULATE = 4;
     private static WordPairTrackingService instance = null;
     ArrayList<WordPairTracking> userDataWordPool = null;
-    List<WordPair> systemWordPool = null;
+    List<WordPair> systemWordPool;
     private WordPairTrackingService(){
-        Optional<UserData> userDataOpt = DataSaverService.getInstance().getUserData();
+        Optional<UserData> userDataOpt = UserDataService.getInstance().getUserData();
         userDataOpt.ifPresent(userData -> userDataWordPool = userData.getUserwordPool());
-        systemWordPool = getSystemWordPool();
-    }
-
-    private List<WordPair> getSystemWordPool() {
-        return Arrays.asList(
-                new WordPair("machen", "to do", PriorityLevel.HIGHEST),
-                new WordPair("anbieten", "to offer", PriorityLevel.MEDIUM),
-                new WordPair("sein", "to be", PriorityLevel.HIGHEST),
-                new WordPair("führen", "to lead", PriorityLevel.HIGH),
-                new WordPair("Detektiv", "detective", PriorityLevel.LOWEST),
-                new WordPair("Stein", "a rock", PriorityLevel.HIGHEST)
-        );
+        systemWordPool = WordLoaderService.getInstance().getSystemWordPairs();
     }
 
     public static WordPairTrackingService getInstance(){
@@ -116,6 +88,6 @@ public class WordPairTrackingService {
 
     public void updateWordPairIncrement(WordPairTracking wordPair, boolean isSuccess){
         wordPair.updateTracking(isSuccess);
-        DataSaverService.getInstance().saveUserData();
+        UserDataService.getInstance().saveUserData();
     }
 }

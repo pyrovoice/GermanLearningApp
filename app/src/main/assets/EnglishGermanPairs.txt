@@ -1,0 +1,6 @@
+to;do;;machen;4
+to;offer;;anbieten;2
+to;be;;sein;4
+to;lead;;führen;3
+a;detective;der;Detektiv;0
+a;rock;der;Stein;4

@@ -40,20 +40,4 @@ public class WordPairTracking implements Serializable {
             successTracker--;
         }
     }
-
-    public String getShownWord() {
-        if (isEnglishShown){
-            return wordPair.getEnglishWord();
-        }else{
-            return wordPair.getGermanWord();
-        }
-    }
-
-    public String getHiddenWord() {
-        if (isEnglishShown){
-            return wordPair.getGermanWord();
-        }else{
-            return wordPair.getEnglishWord();
-        }
-    }
 }
