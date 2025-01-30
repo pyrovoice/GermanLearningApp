@@ -86,24 +86,24 @@ public class PlayActivity extends Activity {
             return;
         }
         currentWordPair = nextWordOpt.get();
-        String article = getArticle(currentWordPair, true);
+        String article = getArticleString(currentWordPair, true);
         wordShownParticle.setText(article);
-        String word = getWord(currentWordPair, true);
+        String word = getWordString(currentWordPair, true);
         wordShown.setText(word);
-        ConvertTextToSpeech(article + " " + word, getLocale(currentWordPair, true));
+        ConvertTextToSpeech(article + " " + word, getWordLocale(currentWordPair, true));
         showRevealButton();
     }
 
     private void revealWord(){
-        String article = getArticle(currentWordPair, false);
+        String article = getArticleString(currentWordPair, false);
         wordHiddenParticle.setText(article);
-        String word = getWord(currentWordPair, false);
+        String word = getWordString(currentWordPair, false);
         wordHidden.setText(word);
-        ConvertTextToSpeech(article + " " + word, getLocale(currentWordPair, false));
+        ConvertTextToSpeech(article + " " + word, getWordLocale(currentWordPair, false));
         showAnswerButtons();
     }
 
-    private String getWord(WordPairTracking currentWordPair, boolean isShown){
+    private String getWordString(WordPairTracking currentWordPair, boolean isShown){
         if(currentWordPair.isEnglishShown() == isShown){
             return currentWordPair.getWordPair().getEnglishWord();
         }else{
@@ -111,7 +111,7 @@ public class PlayActivity extends Activity {
         }
     }
 
-    private String getArticle(WordPairTracking currentWordPair, boolean isShown){
+    private String getArticleString(WordPairTracking currentWordPair, boolean isShown){
         if(currentWordPair.isEnglishShown() == isShown){
             return currentWordPair.getWordPair().getEnglishArticle();
         }else{
@@ -119,7 +119,7 @@ public class PlayActivity extends Activity {
         }
     }
 
-    private Locale getLocale(WordPairTracking currentWordPair, boolean isShown) {
+    private Locale getWordLocale(WordPairTracking currentWordPair, boolean isShown) {
         if(currentWordPair.isEnglishShown() == isShown){
             return engLocal;
         }else{

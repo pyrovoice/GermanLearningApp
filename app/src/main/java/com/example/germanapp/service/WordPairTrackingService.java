@@ -20,40 +20,47 @@ public class WordPairTrackingService {
     private final int CURRENT_WORDPAIR_POOL_SIZE_REPOPULATE = 4;
     private static WordPairTrackingService instance = null;
     ArrayList<WordPairTracking> userDataWordPool = null;
-    List<WordPair> wordPairBacklog;
-    private WordPairTrackingService(){
+    List<WordPair> systemWordPool;
+
+    private WordPairTrackingService() {
         Optional<UserData> userDataOpt = UserDataService.getInstance().getUserData();
         userDataOpt.ifPresent(userData -> userDataWordPool = userData.getUserwordPool());
-        buildWordPairBacklog();
+        buildSystemWordPoolBacklog();
     }
 
-    private void buildWordPairBacklog() {
-        wordPairBacklog = WordLoaderService.getInstance().getSystemWordPairs();
-        populatePoolFromSystemPool();
-    }
-
-    public static WordPairTrackingService getInstance(){
-        if (instance == null){
+    public static WordPairTrackingService getInstance() {
+        if (instance == null) {
             instance = new WordPairTrackingService();
         }
         return instance;
     }
 
-    public Optional<WordPairTracking> getNextWord(){
-        if(wordPoolTracker >= currentWordPool.size()){
+    private void buildSystemWordPoolBacklog() {
+        List<WordPair> loadedSystemWordPool = WordLoaderService.getInstance().getSystemWordPairs();
+        Collections.shuffle(loadedSystemWordPool);
+        userDataWordPool.forEach(uwt -> {
+            loadedSystemWordPool.remove(uwt.getWordPair());
+        });
+        loadedSystemWordPool.sort(Comparator.comparing(WordPair::getPriorityLevel));
+        systemWordPool = loadedSystemWordPool;
+    }
+
+    public Optional<WordPairTracking> getNextWord() {
+        if (wordPoolTracker >= currentWordPool.size()) {
             updatePool();
             wordPoolTracker = 0;
         }
-        if(currentWordPool.isEmpty()){
+        if (currentWordPool.isEmpty()) {
             return Optional.empty();
         }
         return Optional.of(currentWordPool.get(wordPoolTracker++));
     }
 
-    private void updatePool(){
+    private void updatePool() {
         removeFromCurrentPoolLearnedWords();
-        if(currentWordPool.size() <= CURRENT_WORDPAIR_POOL_SIZE_REPOPULATE){
-
+        if (currentWordPool.size() <= CURRENT_WORDPAIR_POOL_SIZE_REPOPULATE) {
+            populatePoolFromUserPool();
+            populatePoolFromSystemPool();
         }
         currentWordPool.forEach(WordPairTracking::toggleLanguage);
         Collections.shuffle(currentWordPool);
@@ -64,7 +71,8 @@ public class WordPairTrackingService {
                 .filter(wordPairTracking -> !isWordLearned(wordPairTracking))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
-    private void populatePoolFromUserPool(List<WordPair> wordPairBacklog) {
+
+    private void populatePoolFromUserPool() {
         currentWordPool.addAll(userDataWordPool.stream()
                 .filter(wordPairTracking -> !isWordLearned(wordPairTracking))
                 .filter(wordPairTracking -> !currentWordPool.contains(wordPairTracking))
@@ -72,14 +80,17 @@ public class WordPairTrackingService {
                 .collect(Collectors.toList()));
     }
 
-    private void populatePoolFromSystemPool(){
-        List<WordPairTracking> addedWords = systemWordPool.stream()
-                .sorted(Comparator.comparing(WordPair::getPriorityLevel))
-                .filter(wordPair -> currentWordPool.stream().noneMatch(c -> c.getWordPair() == wordPair))
-                .filter(wordPair -> userDataWordPool.stream().noneMatch(c -> c.getWordPair() == wordPair))
-                .limit(CURRENT_WORDPAIR_POOL_SIZE - currentWordPool.size())
+    private void populatePoolFromSystemPool() {
+        int nbrWordsToTakeFromPool = Math.min(CURRENT_WORDPAIR_POOL_SIZE - currentWordPool.size(), systemWordPool.size());
+        if (nbrWordsToTakeFromPool == 0) {
+            return;
+        }
+        List<WordPair> subList = systemWordPool.subList(0, nbrWordsToTakeFromPool - 1);
+        List<WordPairTracking> addedWords = subList
+                .stream()
                 .map(WordPairTracking::new)
                 .collect(Collectors.toList());
+        systemWordPool.removeAll(subList);
         userDataWordPool.addAll(addedWords);
         currentWordPool.addAll(addedWords);
     }
@@ -90,7 +101,7 @@ public class WordPairTrackingService {
     }
 
 
-    public void updateWordPairIncrement(WordPairTracking wordPair, boolean isSuccess){
+    public void updateWordPairIncrement(WordPairTracking wordPair, boolean isSuccess) {
         wordPair.updateTracking(isSuccess);
         UserDataService.getInstance().saveUserData();
     }

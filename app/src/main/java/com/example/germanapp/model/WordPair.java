@@ -1,6 +1,7 @@
 package com.example.germanapp.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class WordPair implements Serializable {
     private final String englishWord;
@@ -34,5 +35,18 @@ public class WordPair implements Serializable {
 
     public String getEnglishArticle() {
         return englishArticle;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WordPair wordPair = (WordPair) o;
+        return Objects.equals(englishWord, wordPair.englishWord) && Objects.equals(englishArticle, wordPair.englishArticle) && Objects.equals(germanWord, wordPair.germanWord) && Objects.equals(germanArticle, wordPair.germanArticle) && priorityLevel == wordPair.priorityLevel;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(englishWord, englishArticle, germanWord, germanArticle, priorityLevel);
     }
 }
