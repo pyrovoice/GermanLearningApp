@@ -18,7 +18,7 @@ A simple app to learn german words and sentences, without ads or other bullstuff
 
 ## TODOs
 
-- Fix the word pool to not get reloaded every cycle
+- ~~Fix the word pool to not get reloaded every cycle~~
 - Populate the word library.
 - Add sentences.
 - Add an activity to review learned words and put them back in the learning pool if forgotten.
