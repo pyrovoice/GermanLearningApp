@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.example.germanapp.App;
 import com.example.germanapp.model.UserData;
+import com.example.germanapp.model.UserWordPair;
+import com.example.germanapp.model.WordPair;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,11 +15,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Optional;
+import java.util.UUID;
 
 public class UserDataService {
     private static UserDataService instance = null;
     final String USER_FILE_NAME = "user_file.txt";
-    public UserData userData = null;
+    private UserData userData = null;
     private UserDataService() {
         try {
             File file = getSaveFilePath();
@@ -77,7 +80,7 @@ public class UserDataService {
         }
     }
 
-    public void saveUserData() {
+    public boolean saveUserData() {
         FileOutputStream outputStream = null;
         ObjectOutputStream oos = null;
         try {
@@ -86,13 +89,13 @@ public class UserDataService {
                 createSaveFile(file);
                 if (!file.exists()) {
                     Log.println(Log.ERROR, null, "Cannot save: No file");
-                    return;
+                    return false;
                 }
             }
             outputStream = new FileOutputStream(file);
             oos = new ObjectOutputStream(outputStream);
             oos.writeObject(userData);
-
+            return true;
         } catch (FileNotFoundException e) {
             Log.println(Log.ERROR, null, "File read issue (FNF): " + e.getMessage());
         } catch (IOException e) {
@@ -113,10 +116,10 @@ public class UserDataService {
                 }
             }
         }
+        return false;
     }
     private File getSaveFilePath() throws IOException {
         File dirPath = App.getContext().getExternalFilesDir(null);
-        Log.println(Log.DEBUG, null, dirPath.getPath());
         return new File(dirPath + "/" + USER_FILE_NAME);
     }
     private void createSaveFile(File file) throws IOException {
@@ -139,6 +142,21 @@ public class UserDataService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public boolean upsertUserWord(WordPair wordPair, UUID wordPairID) {
+        UserWordPair userWordPair;
+        if(wordPairID == null){
+            userWordPair = new UserWordPair(wordPair);
+            userData.getUserCreatedWords().add(userWordPair);
+        }else{
+            Optional<UserWordPair> foundWordOpt = userData.getUserCreatedWords().stream().filter(savedWord -> savedWord.getUuid().equals(wordPairID)).findFirst();
+            if(foundWordOpt.isPresent()){
+                userWordPair = foundWordOpt.get();
+                userWordPair.setWordPair(wordPair);
+            }
+        }
+        return saveUserData();
     }
 }
 

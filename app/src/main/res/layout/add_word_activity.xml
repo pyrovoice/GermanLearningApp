@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/engParticle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:layout_toStartOf="@+id/englishWord"
+        android:hint="a"
+        android:minWidth="5dp"
+        android:paddingEnd="5dp"
+        android:textAlignment="textEnd"
+        android:textSize="24sp"
+        android:textStyle="italic" />
+
+    <EditText
+        android:id="@+id/englishWord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:hint="English word"
+        android:textSize="28sp" />
+
+    <EditText
+        android:id="@+id/gerParticle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="205dp"
+        android:layout_toStartOf="@+id/germanWord"
+        android:hint="das"
+        android:minWidth="5dp"
+        android:paddingEnd="5dp"
+        android:textAlignment="textEnd"
+        android:textSize="24sp"
+        android:textStyle="italic" />
+
+    <EditText
+        android:id="@+id/germanWord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:hint="Deutsch Wort"
+        android:textSize="28sp" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="147dp"
+        android:layout_height="131dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="31dp"
+        android:layout_marginBottom="30dp"
+        android:text="Save"
+        android:textSize="28sp" />
+
+    <Button
+        android:id="@+id/clearButton"
+        android:layout_width="116dp"
+        android:layout_height="89dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="46dp"
+        android:layout_marginBottom="32dp"
+        android:text="Clear"
+        android:textSize="24sp" />
+
+    <Spinner
+        android:id="@+id/wordPrioritySpinner"
+        android:layout_width="222dp"
+        android:layout_height="36dp"
+        android:layout_below="@+id/germanWord"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="false"
+        android:layout_marginTop="90dp"
+        android:spinnerMode="dialog" />
+
+    <ImageButton
+        android:id="@+id/savedWordsButton"
+        android:layout_width="77dp"
+        android:layout_height="86dp"
+        android:layout_above="@+id/clearButton"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="60dp"
+        android:layout_marginBottom="47dp"
+        android:src="@android:drawable/ic_input_get" />
+
+</RelativeLayout>

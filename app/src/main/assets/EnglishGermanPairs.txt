@@ -4,3 +4,103 @@ to;be;;sein;4
 to;lead;;führen;3
 a;detective;der;Detektiv;0
 a;rock;der;Stein;4
+to;be;;sein;4
+to;have;;haben;4
+to;become;;werden;4
+;can, to be able to;;können;4
+;to must, to have to;;müssen;4
+to;say;;sagen;4
+to;do, make;;machen;4
+to;give;;geben;4
+to;come;;kommen;4
+to; should, ought;;sollen;4
+to;want;;wollen;4
+to;go;;gehen;4
+to;know;;wissen;4
+to;see;;sehen;4
+to;let, allow;lassen;4
+to;stand;;stehen;4
+to;find;;finden;4
+to;stay, remain;;bleiben;4
+to;lie;;liegen;4
+to;be called;;heißen;4
+to;think;;denken;4
+to;take;;nehmen;4
+to;do;;tun;1
+to;may, be allowed;;dürfen;4
+to;believe;;glauben;4
+to;stop, hold;;halten;4
+to;name, call (a name);;nennen;4
+to;like;;mögen;4
+to;show;;zeigen;4
+to;lead;;führen;4
+to;speak;;sprechen;4
+to;bring, take;;bringen;4
+to;live;;leben;4
+to;drive, ride;;fahren;4
+to;think, mean;;meinen;3
+to;ask;;fragen;4
+to;know;;kennen;4
+to;be valid;;gelten;4
+to;place, set;;stellen;4
+to;play;;spielen;4
+to;work;;arbeiten;4
+to;need;;brauchen;4
+to;follow;;folgen;4
+to;learn;;lernen;4
+to;exist, insist;bestehen;1
+to;understand;;verstehen;4
+to;set, put, place;;setzen;4
+to;get, receive;;bekommen;4
+to;begin;;beginnen;4
+to;narrate, tell;;erzählen;4
+to;try, attempt;;versuchen;4
+to;write;;schreiben;4
+to;run;;laufen,;4
+to;explain;;erklären;4
+to;correspond;;entsprechen;4
+to;sit;;sitzen;4
+to;pull, move;;ziehen;4
+to;shine, seem, appear;;scheinen;4
+to;fall;;fallen;4
+to;belong;;gehören;4
+to;originate,develop;;entstehen;4
+to;receive;;erhalten;4
+to;meet;;treffen;4
+to;search, look for;;suchen;4
+to;lay, put;;legen;4
+to;introduce, imagine;;vorstellen;4
+to;deal, trade;;handeln;4
+to;achieve, reach;;erreichen;4
+to;carry, wear;;tragen;4
+to;manage, create;;schaffen;4
+to;read;;lesen;4
+to;lose;;verlieren;4
+to;depict, portray;;darstellen;4
+to;recognize, admit;;erkennen;4
+to;develop;;entwickeln;4
+to;talk;;reden;4
+to;appear, look (a certain way);;aussehen;4
+to;appear;;erscheinen;4
+to;form,;educate;;bilden;4
+to;begin;;anfangen;4
+to;expect;;erwarten;4
+to;live;;wohnen;4
+to;affect, concern;;betreffen;4
+to;wait;;warten;4
+to;elapse, decay;;vergehen;1
+to;help;;helfen;4
+to;win;;gewinnen;4
+to;close;;schließen;4
+to;feel;;fühlen;4
+to;offer;;bieten;4
+to;interest;;interessieren;4
+to;remember;;erinnern;4
+to;result in;;ergeben;2
+to;offer;;anbieten;4
+to;study;;studieren;4
+to;connect, link;;verbinden;4
+to;look;at, watch;;ansehen;4
+to;lack, be missing, be absent;;fehlen;2
+to;mean;;bedeuten;4
+to;compare;;vergleichen;4

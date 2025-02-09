@@ -33,16 +33,26 @@
             android:banner="@drawable/app_icon_your_company"
             android:exported="true"
             android:icon="@drawable/app_icon_your_company"
-            android:label="@string/title_activity_main2"
+            android:label="German Learning"
             android:logo="@drawable/app_icon_your_company"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".PlayActivity"
+            android:exported="true"
+            android:theme="@style/Theme.GermanApp">
+        </activity>
+        <activity
+            android:name=".AddWordActivity"
+            android:exported="true"
+            android:theme="@style/Theme.GermanApp">
+        </activity>
+        <activity
+            android:name=".UserWordListActivity"
             android:exported="true"
             android:theme="@style/Theme.GermanApp">
         </activity>
