@@ -19,11 +19,17 @@ A simple app to learn german words and sentences, without ads or other bullstuff
 ## TODOs
 
 - ~~Fix the word pool to not get reloaded every cycle~~
-- Populate the word library.
-- Add sentences.
+- ~~Populate the word library~~.
+- ~~User words and edit~~
+- Add background play mode
+- Add sentences, fix view for sentences
 - Add an activity to review learned words and put them back in the learning pool if forgotten.
 - Testing
 - Pause/Resume functionality
+- Check if streams are closed correctly
+- Delete words, edit words directly from playing
+- Add autocorrect with dictionaries and auto-complete the particules
+- Add a spot for plural of a german word
 
 ## Final words:
 
