@@ -30,7 +30,7 @@ to;do;;tun;1
 to;may, be allowed;;dürfen;4
 to;believe;;glauben;4
 to;stop, hold;;halten;4
-to;name, call (a name);;nennen;4
+to;name;;nennen;1
 to;like;;mögen;4
 to;show;;zeigen;4
 to;lead;;führen;4
@@ -38,11 +38,11 @@ to;speak;;sprechen;4
 to;bring, take;;bringen;4
 to;live;;leben;4
 to;drive, ride;;fahren;4
-to;think, mean;;meinen;3
+to;mean;;meinen;3
 to;ask;;fragen;4
 to;know;;kennen;4
 to;be valid;;gelten;4
-to;place, set;;stellen;4
+to;place;;stellen;4
 to;play;;spielen;4
 to;work;;arbeiten;4
 to;need;;brauchen;4
@@ -50,10 +50,10 @@ to;follow;;folgen;4
 to;learn;;lernen;4
 to;exist, insist;bestehen;1
 to;understand;;verstehen;4
-to;set, put, place;;setzen;4
+to;set;;setzen;4
 to;get, receive;;bekommen;4
 to;begin;;beginnen;4
-to;narrate, tell;;erzählen;4
+to;tell, narrate;;erzählen;4
 to;try, attempt;;versuchen;4
 to;write;;schreiben;4
 to;run;;laufen,;4
@@ -80,15 +80,15 @@ to;depict, portray;;darstellen;4
 to;recognize, admit;;erkennen;4
 to;develop;;entwickeln;4
 to;talk;;reden;4
-to;appear, look (a certain way);;aussehen;4
+to;appear, look (appearance);;aussehen;4
 to;appear;;erscheinen;4
 to;form,;educate;;bilden;4
 to;begin;;anfangen;4
 to;expect;;erwarten;4
 to;live;;wohnen;4
-to;affect, concern;;betreffen;4
+to;affect, concern;;betreffen;3
 to;wait;;warten;4
-to;elapse, decay;;vergehen;1
+to;elapse, decay;;vergehen;0
 to;help;;helfen;4
 to;win;;gewinnen;4
 to;close;;schließen;4
@@ -101,6 +101,6 @@ to;offer;;anbieten;4
 to;study;;studieren;4
 to;connect, link;;verbinden;4
 to;look;at, watch;;ansehen;4
-to;lack, be missing, be absent;;fehlen;2
+to;lack, be missing;;fehlen;2
 to;mean;;bedeuten;4
 to;compare;;vergleichen;4
