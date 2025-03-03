@@ -19,7 +19,7 @@ import androidx.annotation.Nullable;
 import com.example.germanapp.model.UserData;
 import com.example.germanapp.model.UserWordPair;
 import com.example.germanapp.model.WordPair;
-import com.example.germanapp.service.UserDataService;
+import com.example.germanapp.bean.UserDataService;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -17,6 +17,7 @@
         </intent>
     </queries>
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <application
         android:name="com.example.germanapp.App"
         android:allowBackup="true"
@@ -56,5 +57,7 @@
             android:exported="true"
             android:theme="@style/Theme.GermanApp">
         </activity>
+        <service android:name=".service.PlayBackgroundService"  android:enabled="true"/>
+        <service android:name=".service.TTSService" android:enabled="true"/>
     </application>
 </manifest>

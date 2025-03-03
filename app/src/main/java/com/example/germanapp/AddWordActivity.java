@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -15,7 +14,7 @@ import android.widget.Spinner;
 import com.example.germanapp.model.PriorityLevel;
 import com.example.germanapp.model.UserWordPair;
 import com.example.germanapp.model.WordPair;
-import com.example.germanapp.service.UserDataService;
+import com.example.germanapp.bean.UserDataService;
 
 import java.util.UUID;
 

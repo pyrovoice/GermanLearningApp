@@ -7,13 +7,13 @@ a;rock;der;Stein;4
 to;be;;sein;4
 to;have;;haben;4
 to;become;;werden;4
-;can, to be able to;;können;4
-;to must, to have to;;müssen;4
+to;can, be able to;;können;4
+to;must, have to;;müssen;4
 to;say;;sagen;4
 to;do, make;;machen;4
 to;give;;geben;4
 to;come;;kommen;4
-to; should, ought;;sollen;4
+to;should, ought;;sollen;4
 to;want;;wollen;4
 to;go;;gehen;4
 to;know;;wissen;4
@@ -100,7 +100,26 @@ to;result in;;ergeben;2
 to;offer;;anbieten;4
 to;study;;studieren;4
 to;connect, link;;verbinden;4
-to;look;at, watch;;ansehen;4
+to;look at, watch;;ansehen;4
 to;lack, be missing;;fehlen;2
 to;mean;;bedeuten;4
 to;compare;;vergleichen;4
+;nearby;;Nahe;3
+to;join;;beitreten;3
+a;task;;Aufgabe;4
+to;vacuum;;Staubsaugen;3
+;including;;einschließlich;3
+a;floor;;Boden;3
+;Cool!;;Krass;2
+an;effort;;Bemühung;2
+;Tuesday;;Dienstag;4
+;Thursday;;Donnerstag;4
+a;bone;;Knochen;1
+to;save;;Retten;2
+a;meal;;Mahlzeit;3
+the;past;;Vergangenheit;1
+the;future;;Zukunft;1
+a;shower;das;Dusche;2
+a;bath;das;Bad;2
+a;belt;der;Gürtel;1
+a;boardgame;;Brettspiele;1

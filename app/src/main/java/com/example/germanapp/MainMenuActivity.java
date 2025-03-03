@@ -3,11 +3,10 @@ package com.example.germanapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.widget.Button;
 
-import com.example.germanapp.service.UserDataService;
+import com.example.germanapp.service.TTSService;
+import com.example.germanapp.bean.UserDataService;
 
 public class MainMenuActivity extends Activity {
     @Override
@@ -18,6 +17,7 @@ public class MainMenuActivity extends Activity {
         playButton.setOnClickListener(v -> switchToPlayActivity());
         findViewById(R.id.eraseDataButton).setOnClickListener(v->eraseData());
         findViewById(R.id.addWordButton).setOnClickListener(v -> switchToAddWordActivity());
+        startService(new Intent(this, TTSService.class));
     }
 
     private void switchToPlayActivity(){

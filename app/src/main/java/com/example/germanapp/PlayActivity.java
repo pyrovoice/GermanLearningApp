@@ -1,21 +1,22 @@
 package com.example.germanapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.germanapp.service.TTSService;
 import com.example.germanapp.model.WordPairTracking;
-import com.example.germanapp.service.WordPairTrackingService;
+import com.example.germanapp.bean.WordPairTrackingService;
+import com.example.germanapp.service.PlayBackgroundService;
 
 import java.util.Locale;
 import java.util.Optional;
 
 public class PlayActivity extends Activity {
-    TextToSpeech tts;
     TextView wordShown;
     TextView wordShownParticle;
     TextView wordHidden;
@@ -45,35 +46,26 @@ public class PlayActivity extends Activity {
         revealButton.setOnClickListener(v -> revealWord());
         goodAnswerButton.setOnClickListener(v -> isSuccess(true));
         wrongAnswerButton.setOnClickListener(v -> isSuccess(false));
-        tts = new TextToSpeech(PlayActivity.this, status -> {
-            // TODO Auto-generated method stub
-            if (status == TextToSpeech.SUCCESS) {
-                int result = tts.setLanguage(gerLocal);
-                if (result == TextToSpeech.LANG_MISSING_DATA ||
-                        result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                    Log.e("error", "This Language is not supported");
-                }else{
-                    showNextWord();
-                }
-            } else
-                Log.e("error", "Initialization Failed!");
-        });
+        showNextWord();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        TTSService.destroy();
     }
 
     @Override
     protected void onPause() {
-        if (tts != null) {
-            tts.stop();
-            tts.shutdown();
-        }
         super.onPause();
+        Log.println(Log.DEBUG, null, ">>>Play OnPause<<<");
+        startService(new Intent(PlayActivity.this, PlayBackgroundService.class));
     }
 
-    private void ConvertTextToSpeech(String text, Locale locale) {
-        if (tts.getVoice().getLocale() != locale) {
-            tts.setLanguage(locale);
-        }
-        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "0");
+    @Override
+    protected void onResume() {
+        super.onResume();
+        stopService(new Intent(PlayActivity.this, PlayBackgroundService.class));
     }
 
     private void showNextWord() {
@@ -90,7 +82,7 @@ public class PlayActivity extends Activity {
         wordShownParticle.setText(article);
         String word = getWordString(currentWordPair, true);
         wordShown.setText(word);
-        ConvertTextToSpeech(article + " " + word, getWordLocale(currentWordPair, true));
+        TTSService.ConvertTextToSpeech(article + " " + word, getWordLocale(currentWordPair, true));
         showRevealButton();
     }
 
@@ -99,7 +91,7 @@ public class PlayActivity extends Activity {
         wordHiddenParticle.setText(article);
         String word = getWordString(currentWordPair, false);
         wordHidden.setText(word);
-        ConvertTextToSpeech(article + " " + word, getWordLocale(currentWordPair, false));
+        TTSService.ConvertTextToSpeech(article + " " + word, getWordLocale(currentWordPair, false));
         showAnswerButtons();
     }
 
