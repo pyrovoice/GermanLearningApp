@@ -21,7 +21,8 @@ A simple app to learn german words and sentences, without ads or other bullstuff
 - ~~Fix the word pool to not get reloaded every cycle~~
 - ~~Populate the word library~~.
 - ~~User words and edit~~
-- Add background play mode
+- ~~Add background play mode~~
+- ~~Skip word by lowering priority button~~
 - Replace popup with Toast
 - Fix on enter to switch to next entry
 - Mix German/English when adding a word to the played pool
