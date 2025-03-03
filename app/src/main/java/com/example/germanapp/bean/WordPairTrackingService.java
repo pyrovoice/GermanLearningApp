@@ -1,5 +1,6 @@
 package com.example.germanapp.bean;
 
+import com.example.germanapp.model.PriorityLevel;
 import com.example.germanapp.model.UserData;
 import com.example.germanapp.model.WordPair;
 import com.example.germanapp.model.WordPairTracking;
@@ -16,15 +17,14 @@ public class WordPairTrackingService {
     private int wordPoolTracker = 0;
     //TODO: Move those to configuration
     private final int WORDPAIR_SUCCESS_CUTOFF = 3;
-    private final int CURRENT_WORDPAIR_POOL_SIZE = 10;
-    private final int CURRENT_WORDPAIR_POOL_SIZE_REPOPULATE = 4;
+    private final int CURRENT_WORDPAIR_POOL_SIZE = 12;
+    private final int CURRENT_WORDPAIR_POOL_SIZE_REPOPULATE = 7;
     private static WordPairTrackingService instance = null;
-    ArrayList<WordPairTracking> userDataWordPool = null;
+    List<WordPairTracking> userDataWordPool = null;
     List<WordPair> systemWordPool;
 
     private WordPairTrackingService() {
-        Optional<UserData> userDataOpt = UserDataService.getInstance().getUserData();
-        userDataOpt.ifPresent(userData -> userDataWordPool = userData.getUserwordPool());
+        userDataWordPool = buildUserWordPool();
         buildSystemWordPoolBacklog();
     }
 
@@ -33,6 +33,19 @@ public class WordPairTrackingService {
             instance = new WordPairTrackingService();
         }
         return instance;
+    }
+
+    private List<WordPairTracking> buildUserWordPool() {
+        Optional<UserData> userDataOpt = UserDataService.getInstance().getUserData();
+        if(userDataOpt.isEmpty()){
+            return new ArrayList<>();
+        }
+        List<WordPairTracking> userData;
+        userData = userDataOpt.get().getUserwordPool();
+        userData = userData.stream().filter(wordPairTracking -> !isWordLearned(wordPairTracking)).collect(Collectors.toList());
+        Collections.shuffle(userData);
+        userData.sort(Comparator.comparing(wordPair -> -wordPair.getPriorityLevel().ordinal()));
+        return userData;
     }
 
     private void buildSystemWordPoolBacklog() {
@@ -91,18 +104,23 @@ public class WordPairTrackingService {
                 .map(WordPairTracking::new)
                 .collect(Collectors.toList());
         systemWordPool.removeAll(subList);
-        userDataWordPool.addAll(addedWords);
+        UserDataService.getInstance().addWordsToUserPool(addedWords);
         currentWordPool.addAll(addedWords);
     }
 
     private boolean isWordLearned(WordPairTracking wordPairTracking) {
-        return wordPairTracking.getSuccessTracker() > 0 && wordPairTracking.getNbrTries() <= 1 ||
-                wordPairTracking.getSuccessTracker() >= WORDPAIR_SUCCESS_CUTOFF;
+        return wordPairTracking.getSuccessTracker() >= WORDPAIR_SUCCESS_CUTOFF;
     }
 
 
     public void updateWordPairIncrement(WordPairTracking wordPair, boolean isSuccess) {
         wordPair.updateTracking(isSuccess);
+        UserDataService.getInstance().saveUserData();
+    }
+
+    public void lowerPriorityAndRemoveFromPool(WordPairTracking wordPairTracking) {
+        wordPairTracking.setPriorityLevel(PriorityLevel.getPriorityLevelBelow(wordPairTracking.getPriorityLevel()));
+        currentWordPool.remove(wordPairTracking);
         UserDataService.getInstance().saveUserData();
     }
 }

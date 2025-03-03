@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.germanapp.service.TTSService;
 import com.example.germanapp.model.WordPairTracking;
@@ -28,6 +29,7 @@ public class PlayActivity extends Activity {
     Button revealButton;
     Button goodAnswerButton;
     Button wrongAnswerButton;
+    Button lowerPriorityButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +44,12 @@ public class PlayActivity extends Activity {
         revealButton = findViewById(R.id.revealButton);
         goodAnswerButton = findViewById(R.id.goodAnswerButton);
         wrongAnswerButton = findViewById(R.id.wrongAnswerButton);
+        lowerPriorityButton = findViewById(R.id.lowerPriorityButton);
 
         revealButton.setOnClickListener(v -> revealWord());
         goodAnswerButton.setOnClickListener(v -> isSuccess(true));
         wrongAnswerButton.setOnClickListener(v -> isSuccess(false));
+        lowerPriorityButton.setOnClickListener(v -> lowerPriorityDisplayedWord());
         showNextWord();
     }
 
@@ -137,5 +141,10 @@ public class PlayActivity extends Activity {
         revealButton.setVisibility(View.GONE);
         goodAnswerButton.setVisibility(View.GONE);
         wrongAnswerButton.setVisibility(View.GONE);
+    }
+    private void lowerPriorityDisplayedWord() {
+        wordPairTrackingService.lowerPriorityAndRemoveFromPool(currentWordPair);
+        showNextWord();
+        Toast.makeText(this, "Word skipped", Toast.LENGTH_SHORT).show();
     }
 }

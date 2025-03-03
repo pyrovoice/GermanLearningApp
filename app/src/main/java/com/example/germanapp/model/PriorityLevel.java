@@ -37,4 +37,11 @@ public enum PriorityLevel {
     public String toString() {
         return getStringValue(this);
     }
+
+    public static PriorityLevel getPriorityLevelBelow(PriorityLevel priorityLevel){
+        if(priorityLevel.ordinal() == 0){
+            return priorityLevel;
+        }
+        return Arrays.stream(PriorityLevel.values()).filter(p -> p.ordinal() == priorityLevel.ordinal()-1).findAny().get();
+    }
 }

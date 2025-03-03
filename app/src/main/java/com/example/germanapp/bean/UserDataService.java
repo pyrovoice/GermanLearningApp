@@ -6,6 +6,7 @@ import com.example.germanapp.App;
 import com.example.germanapp.model.UserData;
 import com.example.germanapp.model.UserWordPair;
 import com.example.germanapp.model.WordPair;
+import com.example.germanapp.model.WordPairTracking;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -157,6 +159,13 @@ public class UserDataService {
             }
         }
         return saveUserData();
+    }
+
+    public void addWordsToUserPool(List<WordPairTracking> addedWords) {
+        if(userData != null){
+            userData.getUserwordPool().addAll(addedWords);
+        }
+        saveUserData();
     }
 }
 

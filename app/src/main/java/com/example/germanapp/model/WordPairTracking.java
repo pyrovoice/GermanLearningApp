@@ -3,10 +3,10 @@ package com.example.germanapp.model;
 import java.io.Serializable;
 
 public class WordPairTracking implements Serializable {
-    final WordPair wordPair;
+    private final WordPair wordPair;
     private boolean isEnglishShown = true;
     private int successTracker = 0;
-    private int nbrTries = 0;
+    private PriorityLevel priorityLevelOverride = null;
 
     public WordPairTracking(WordPair wordPair) {
         this.wordPair = wordPair;
@@ -20,24 +20,31 @@ public class WordPairTracking implements Serializable {
         return isEnglishShown;
     }
 
-    public WordPair getWordPair() {
-        return wordPair;
-    }
-
     public int getSuccessTracker() {
         return successTracker;
     }
 
-    public int getNbrTries() {
-        return nbrTries;
-    }
-
     public void updateTracking(boolean isSuccess) {
-        this.nbrTries++;
-        if(isSuccess && successTracker < 2){
+        if(isSuccess){
+            successTracker = Math.max(successTracker, 0);
             successTracker++;
-        }else if (!isSuccess && successTracker > -1){
+        }else{
             successTracker--;
         }
+    }
+
+    public void setPriorityLevel(PriorityLevel priorityLevel) {
+        this.priorityLevelOverride = priorityLevel;
+    }
+
+    public PriorityLevel getPriorityLevel(){
+        if(priorityLevelOverride != null){
+            return priorityLevelOverride;
+        }
+        return wordPair.getPriorityLevel();
+    }
+
+    public WordPair getWordPair() {
+        return wordPair;
     }
 }
