@@ -1,4 +1,4 @@
-package com.example.germanapp;
+package com.example.germanapp.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.germanapp.R;
 import com.example.germanapp.service.TTSService;
 import com.example.germanapp.model.WordPairTracking;
 import com.example.germanapp.bean.WordPairTrackingService;

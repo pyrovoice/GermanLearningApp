@@ -1,10 +1,11 @@
-package com.example.germanapp;
+package com.example.germanapp.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.example.germanapp.R;
 import com.example.germanapp.service.TTSService;
 import com.example.germanapp.bean.UserDataService;
 

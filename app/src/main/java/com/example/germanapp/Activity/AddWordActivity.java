@@ -1,4 +1,4 @@
-package com.example.germanapp;
+package com.example.germanapp.Activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -10,7 +10,9 @@ import android.view.KeyEvent;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.example.germanapp.R;
 import com.example.germanapp.model.PriorityLevel;
 import com.example.germanapp.model.UserWordPair;
 import com.example.germanapp.model.WordPair;
@@ -89,18 +91,13 @@ public class AddWordActivity extends Activity {
 
     private void upsertWord(){
         boolean success = UserDataService.getInstance().upsertUserWord(getWordPairFromEntries(), wordPairID);
-
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(" ");
-
+        String s;
         if(success){
-            alertDialog.setMessage("Success");
+            s = "Success";
         }else{
-            alertDialog.setMessage("Failure to Save!");
+            s = "Failure to Save!";
         }
-        alertDialog.show();
-        final Handler handler = new Handler();
-        handler.postDelayed(alertDialog::dismiss, 400);
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     private void switchToWordListActivity(){

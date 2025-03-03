@@ -1,4 +1,4 @@
-package com.example.germanapp;
+package com.example.germanapp.Activity;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.example.germanapp.R;
 import com.example.germanapp.model.UserData;
 import com.example.germanapp.model.UserWordPair;
 import com.example.germanapp.model.WordPair;
